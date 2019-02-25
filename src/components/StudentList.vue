@@ -9,7 +9,7 @@
         </div>
         <div class="accordion" id="students-example">
             <div class="row card collapsed" v-for="student in students">
-                <div class="card-header " v-on:click="toggle(student.id)">
+                <div class="card-header " v-on:click="toggleCard(student.id)">
                     <h5 class="mb-0">
                         <span class="">
                             {{student.name}}, ({{student.age}})
@@ -18,6 +18,12 @@
                             <router-link :to="{ name:'student', params:{id:student.id}}">
                                 <font-awesome-icon icon="edit"/>
                             </router-link>
+                        </span>
+
+                        <span class="student-delete">
+                            <button type="button" v-on:click="deleteStudent(student.id)">
+                                <font-awesome-icon icon="trash-alt"/>
+                            </button>
                         </span>
                     </h5>
                 </div>
@@ -34,12 +40,12 @@
 </template>
 
 <script lang="ts">
-    import {Component, Prop, Vue} from 'vue-property-decorator';
+    import {Component, Vue} from 'vue-property-decorator';
     import TodoList from '@/components/TodoList.vue';
     import store from "../store";
-    import Student from "../models/Student";
-    import studentService from "../services/StudentService";
     import * as $ from 'jquery';
+
+    declare var navigator: any;
 
     @Component({
         name: "StudentList",
@@ -54,13 +60,22 @@
     })
     export default class StudentList extends Vue {
         addStudent(): void {
-            let newStudent = new Student("", new Date(), 1, []);
-            studentService.add(newStudent);
-            this.$router.push('/student/' + newStudent.id)
+            this.$router.push('/student/new')
         }
 
-        toggle(id: string): void {
+        toggleCard(id: string): void {
             $('#' + id).toggle()
+        }
+
+        deleteStudent(id: string): void {
+            navigator.notification.confirm(
+                'Do you really want to delete the student?', // message
+                (i: number) => {
+                    i == 1 ? this.$store.commit('deleteStudent', id) : "";
+                },            // callback to invoke with index of button pressed
+                'Delete Student',           // title
+                ['Delete', 'Cancel']     // buttonLabels
+            );
         }
     }
 </script>

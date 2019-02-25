@@ -13,19 +13,26 @@
 </template>
 
 <script lang="ts">
+    import {mapState} from "vuex";
+
     declare var navigator: any;
 
     import {Vue, Prop, Component} from 'vue-property-decorator';
     import TodoView from '@/components/TodoView.vue';
     import Todo from "@/models/Todo";
     import todoService from "@/services/TodoService";
-    import socialSerivce from "@/services/SocialService";
+    import socialService from "@/services/SocialService";
 
 
     @Component({
         components: {
             TodoView
         },
+        computed:{
+            ...mapState{
+
+            }
+        }
     })
     export default class TodoList extends Vue {
         @Prop() private todos!: Todo[];
@@ -45,8 +52,7 @@
         }
 
         share() {
-
-            socialSerivce.share(this.todos);
+            socialService.share(this.todos);
         }
 
         add(): void {
