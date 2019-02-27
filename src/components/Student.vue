@@ -1,32 +1,32 @@
 <template>
-    <div>
-        <h1>{{student.name}} ({{student.age}}), {{student.grade}}th</h1>
+    <div class="container">
+        <h1>{{student.name}}{{student.age? ' ('+student.age+')' : '' }}{{(student.grade)?', '+student.grade+'th' : ''}}</h1>
 
         <h2> Edit Student</h2>
         <div class="student-edit">
 
             <div class="student-edit-name">
-                <label for="student-edit-name-form">Name</label><input id="student-edit-name-form" type="text"
+                <div for="student-edit-name-form">Name</div><input id="student-edit-name-form" type="text"
                                                                        v-model="student.name"/>
             </div>
 
             <div class="student-edit-bday">
-                <label for="student-edit-age-form">Birthday</label><input id="student-edit-age-form" type="date"
+                <div for="student-edit-age-form">Birthday</div><input id="student-edit-age-form" type="date"
                                                                           v-model="student.bdayString"/>
             </div>
 
             <div class="student-edit-grade">
-                <label for="student-edit-grade-form">Grade</label><input id="student-edit-grade-form" type="number"
+                <div for="student-edit-grade-form">Grade</div><input id="student-edit-grade-form" type="number"
                                                                          v-model="student.grade"/>
             </div>
 
             <div student-edit-save>
-                <button type="button" class="btn btn-block" v-on:click="save()">Save</button>
+                <button type="button" class="btn btn-info" v-on:click="save()">Save</button>
             </div>
         </div>
 
         <h2>Todos</h2>
-        <TodoList v-bind:todos="student.todos"></TodoList>
+        <TodoList v-bind:todos="student.todos" v-bind:ownerId="student.id"></TodoList>
 
     </div>
 </template>
@@ -41,23 +41,24 @@
         name: "StudentView",
         components: {TodoList},
         computed: {
-            student(): Student | undefined {
-                let param = this.$route.params['id']
-                if (!param || param ==='new') {
-                    return new Student("", new Date(), 1, []);
-                } else {
-                    return this.$store.getters.getStudentById(this.$route.params['id']);
-                }
-            }
         },
         methods:{
-            save(){
-                console.log(this.student);
-                this.$store.commit('saveStudent', this.student);
-            }
         }
     })
     export default class StudentView extends Vue {
+        get student(): Student | undefined {
+            let param = this.$route.params['id'];
+            if (!param || param ==='new') {
+                return new Student("", new Date(), 1, []);
+            } else {
+                return this.$store.getters.getStudentById(this.$route.params['id']);
+            }
+        }
+
+        save(){
+            console.log(this.student);
+            this.$store.commit('saveStudent', this.student);
+        }
 
 
     }

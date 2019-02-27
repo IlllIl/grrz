@@ -5,7 +5,7 @@
         <ol>
             <li v-for="(todo, index) in todos">
 
-                <TodoView v-bind:todo="todo"></TodoView>
+                <TodoView v-bind:todo="todo" v-bind:student="student"></TodoView>
                 <span class="todo-item-delete" v-on:click="del(index)">del</span>
             </li>
         </ol>
@@ -13,10 +13,9 @@
 </template>
 
 <script lang="ts">
-    import {mapState} from "vuex";
+    import Student from "../models/Student";
 
     declare var navigator: any;
-
     import {Vue, Prop, Component} from 'vue-property-decorator';
     import TodoView from '@/components/TodoView.vue';
     import Todo from "@/models/Todo";
@@ -29,43 +28,32 @@
             TodoView
         },
         computed:{
-            ...mapState{
-
-            }
         }
     })
     export default class TodoList extends Vue {
-        @Prop() private todos!: Todo[];
+        @Prop() private student: Student;
 
-
+        get todos(){
+            return this.student.todos
+        }
         constructor() {
             super();
-            todoService.data.subscribe(() => {
-                this.todos.sort((o1: Todo, o2: Todo) => {
-                    if (o1.isDone == o2.isDone) {
-                        return o1.creationDate > o2.creationDate ? -1 : 1;
-                    } else {
-                        return o1.isDone ? 1 : -1;
-                    }
-                });
-            })
         }
 
         share() {
-            socialService.share(this.todos);
+            socialService.share(this.student.todos);
         }
 
         add(): void {
-            let newTodo = todoService.create();
-            this.todos.push(newTodo);
-            todoService.data.next();
+            this.$store.commit('addTodo', this.student)
+            // todoService.data.next();
         }
 
         del(index: number): void {
             navigator.notification.confirm(
-                'Do you really want to delete the todo?\n\"' + this.todos[index] + '\"', // message
+                'Do you really want to delete the todo?\n\"' + this.student.todos[index].task + '\"', // message
                 (i: number) => {
-                    i == 1 ? this.$delete(this.todos, index) : "";
+                    i == 1 ? this.$store.commit('deleteTodo', {student: this.student, index: i}) : "";
                 },            // callback to invoke with index of button pressed
                 'Delete Todo',           // title
                 ['Delete', 'Cancel']     // buttonLabels
@@ -74,7 +62,7 @@
         }
 
         canMessage(): boolean{
-            return this.todos.filter(value => !value.isDone).length>0
+            return this.student.todos.filter(value => !value.isDone).length>0
         }
 
     }

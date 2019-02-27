@@ -30,7 +30,7 @@
 
 
                 <div class="card-body" style="display: none" v-bind:id="student.id" data-parent="#students-example">
-                    <TodoList v-bind:todos="student.todos"></TodoList>
+                    <TodoList v-bind:student="student"></TodoList>
                 </div>
 
             </div>

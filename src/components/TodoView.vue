@@ -1,7 +1,7 @@
 <template>
     <div>
-        <input v-on:change="update()" type="checkbox" v-model="todo.isDone" :disabled="todo.isDone"/>
-        <input type="text" v-model="todo.task" :disabled="todo.isDone"/>
+        <input type="checkbox" :checked="todo.isDone" @input="updateTodoDone" :disabled="todo.isDone"/>
+        <input type="text" :value="todo.task" @input="updateTodoTask" :disabled="todo.isDone"/>
         <button :disabled="todo.isDone"><font-awesome-icon icon="music"/></button>
     </div>
 </template>
@@ -9,7 +9,7 @@
 <script lang="ts">
     import {Component, Prop, Vue} from 'vue-property-decorator';
     import Todo from "../models/Todo";
-    import todoService from "../services/TodoService";
+    import Student from "../models/Student";
 
     @Component({
 
@@ -19,10 +19,25 @@
 
         @Prop() private todo!: Todo;
 
-        update(){
-            console.log(this.todo.isDone);
-            todoService.data.next()
+        @Prop() private student!: Student;
+
+        updateTodoTask (e) {
+            this.$store.commit('updateTodoTask', {
+                student: this.student,
+                todo: this.todo,
+                val: e.target.value
+            })
+
         }
+        updateTodoDone (e) {
+            this.$store.commit('updateTodoDone', {
+                student: this.student,
+                todo: this.todo,
+                val: e.target.value
+            })
+
+        }
+
     }
 </script>
 

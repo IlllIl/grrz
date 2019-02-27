@@ -1,15 +1,18 @@
 import ITodo from "@/interfaces/IToDo";
+import {v4 as uuid} from 'uuid';
 
 export default class Todo implements ITodo{
-    task: string;
-    isDone: boolean;
+    id: string;
+    task!: string;
+    isDone!: boolean;
     piece!: string;
-    creationDate: Date;
+    creationDate!: Date;
 
     constructor(raw : ITodo) {
         this.task = raw.task;
         this.isDone = raw.isDone;
         this.creationDate = new Date();
+        this.id = uuid();
     }
 
     toString(): string{
