@@ -70,17 +70,25 @@
         }
     })
     export default class WorkView extends Vue {
-        work: Work;
+        private _work: Work;
 
-        updateDifficulty(e){
+        get work(): Work {
+            return this._work;
+        }
+
+        set work(value: Work) {
+            this._work = value;
+        }
+
+        updateDifficulty(e: any){
             console.log("change", e)
-            this.work.difficulty= e;
+            this._work.difficulty= e;
         }
 
         save() {
-            console.log("saving", this.work);
-            this.$store.commit('saveWork', this.work)
-            this.$router.push('/work/' + this.work.id)
+            console.log("saving", this._work);
+            this.$store.commit('saveWork', this._work)
+            this.$router.push('/work/' + this._work.id)
         }
     }
 </script>

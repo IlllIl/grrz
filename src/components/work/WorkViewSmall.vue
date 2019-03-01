@@ -21,7 +21,15 @@
         }
     })
     export default class WorkView extends Vue{
-        @Prop() workId : string
+        @Prop() private _workId : string;
+        get workId(): string {
+            return this._workId;
+        }
+
+        set workId(value: string) {
+            this._workId = value;
+        }
+
     }
 </script>
 <style scoped>
