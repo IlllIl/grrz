@@ -19,6 +19,7 @@ library.add(faPlus);
 library.add(faTrashAlt);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
+
 Vue.config.productionTip = false;
 
 new Vue({
@@ -32,3 +33,4 @@ document.addEventListener('onunload', evt => {
 document.addEventListener('pause', evt => {
     console.log("pause", new Date())
 },false);
+

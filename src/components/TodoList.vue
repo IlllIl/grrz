@@ -1,26 +1,28 @@
 <template>
-    <div class="todo-list">
-        <button class="todo-add" v-on:click="add()">+</button>
-        <button class="todo-share" v-on:click="share()" :disabled="!canMessage()">Message</button>
-        <ol>
-            <li v-for="(todo, index) in todos">
+    <div class="todo-list form-group">
+        <button class=" btn btn-info todo-add" v-on:click="add()">Add todo</button>
+        <button class=" btn btn-info todo-share" v-on:click="share()" :disabled="!canMessage()">Message</button>
+        <div>
+            <div v-for="(todo, index) in todos">
 
-                <TodoView v-bind:todo="todo" v-bind:student="student"></TodoView>
-                <span class="todo-item-delete" v-on:click="del(index)">del</span>
-            </li>
-        </ol>
+                <TodoView v-bind:todo="todo" v-bind:student="student">
+                    <!-- Slot content-->
+                    <span class="todo-item-delete" v-on:click="del(index)"> <font-awesome-icon icon="trash-alt"/></span>
+
+                </TodoView>
+                <slot></slot>
+            </div>
+        </div>
     </div>
 </template>
 
 <script lang="ts">
     import Student from "../models/Student";
+    import {Component, Prop, Vue} from 'vue-property-decorator';
+    import TodoView from '@/components/TodoView.vue';
+    import socialService from "@/services/SocialService";
 
     declare var navigator: any;
-    import {Vue, Prop, Component} from 'vue-property-decorator';
-    import TodoView from '@/components/TodoView.vue';
-    import Todo from "@/models/Todo";
-    import todoService from "@/services/TodoService";
-    import socialService from "@/services/SocialService";
 
 
     @Component({
@@ -46,7 +48,6 @@
 
         add(): void {
             this.$store.commit('addTodo', this.student)
-            // todoService.data.next();
         }
 
         del(index: number): void {
@@ -69,5 +70,7 @@
 </script>
 
 <style scoped>
-
+.todo-share{
+    float: right;
+}
 </style>

@@ -3,7 +3,7 @@ import {v4 as uuid} from 'uuid';
 export default class Work {
 
     id: string;
-    name: string;
+    title: string;
     author!: string;
     location!: string;
     tags!: string[];
@@ -13,7 +13,7 @@ export default class Work {
 
     constructor(name: string) {
         this.id = uuid();
-        this.name = name;
+        this.title = name;
     }
 
 }
