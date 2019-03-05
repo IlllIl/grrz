@@ -53,7 +53,7 @@
 
 
         get works() {
-            let filtered = this.$data.allWorks.filter(work => {
+            let filtered = this.$data.allWorks.filter((work: any) => {
                 for (let filter of this.stringFilters) {
                     if (this.stringSearch(work, filter)) {
                         return true;
@@ -64,7 +64,7 @@
             return filtered;
         }
 
-        private stringSearch(work: Work, key: string): boolean {
+        private stringSearch(work: any, key: string): boolean {
             return work[key] && (/*String cast*/'' + work[key]).toLocaleLowerCase().includes(this.$data.search.toLocaleLowerCase());
         }
     }

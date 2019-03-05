@@ -27,13 +27,7 @@ const initialState = {
         [new Student(
             "Askim",
             new Date('1990-01-01T00:00:00'),
-            6,
-            [
-                {
-                    task: "G-Mail",
-                    isDone: false
-                }
-            ]
+            6
         ),
         ],
     works: [{author: "Pärt	", title: "Für Alina"}, {

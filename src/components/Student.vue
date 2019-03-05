@@ -53,6 +53,9 @@
             return util;
         }
         get bday(){
+            if(!this.student || !this.student.bday){
+                return "2010-01-01"
+            }
             let bday= JSON.parse(JSON.stringify(this.student.bday));
             if( (typeof bday) === 'string'){
                 bday = new Date(bday)
@@ -70,13 +73,15 @@
         }
         set bday(bla:any){
             console.log("set", bla)
-            this.student.bday= new Date(bla)
+            if(this.student){
+                this.student.bday= new Date(bla)
+            }
         }
 
         get student(): Student | undefined {
             let param = this.$route.params['id'];
             if (!param || param ==='new') {
-                return new Student("", new Date(), 1, []);
+                return new Student("", new Date(), 1);
             } else {
                 return this.$store.getters.getStudentById(this.$route.params['id']);
             }

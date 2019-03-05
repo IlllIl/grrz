@@ -61,6 +61,7 @@
         }
     })
     export default class StudentList extends Vue {
+        static jquery : any = $;
         addStudent(): void {
             this.$router.push('/student/new')
         }
@@ -68,8 +69,10 @@
         get Util(){{
             return util;
         }}
-        toggleCard(id: string): void {
-            $('#' + id).toggle()
+
+        static toggleCard(id: string): void {
+            let b = '#' + id;
+            this.jquery(b).toggle();
         }
 
         deleteStudent(id: string): void {

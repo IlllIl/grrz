@@ -32,8 +32,8 @@
     import {Component, Prop, Vue} from 'vue-property-decorator';
     import Todo from "../models/Todo";
     import Student from "../models/Student";
-    import WorkList from "./work/WorkList";
-    import WorkViewSmall from "./work/WorkViewSmall";
+    import WorkList from "./work/WorkList.vue";
+    import WorkViewSmall from "./work/WorkViewSmall.vue";
 
     @Component({
 
@@ -49,6 +49,7 @@
 
         @Prop() private student!: Student;
 
+        $refs : any;
         addWork(e) {
             console.log('adding work', e);
             this.$store.commit('setTodoPiece', {

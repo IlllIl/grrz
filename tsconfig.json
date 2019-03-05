@@ -9,7 +9,10 @@
     "experimentalDecorators": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "strictPropertyInitialization": false,
+    "noImplicitAny": false,
     "sourceMap": true,
+
     "baseUrl": ".",
     "types": [
       "webpack-env"

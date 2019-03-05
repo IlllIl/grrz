@@ -13,21 +13,11 @@
 
     @Component({
         name:"WorkViewSmall",
-
-        computed: {
-            work():Work | undefined{
-                return   workSerivce.getById(this.workId);
-            }
-        }
     })
     export default class WorkView extends Vue{
-        @Prop() private _workId : string;
-        get workId(): string {
-            return this._workId;
-        }
-
-        set workId(value: string) {
-            this._workId = value;
+        @Prop() workId : string;
+        get work():Work | undefined{
+            return workSerivce.getById(this.workId);
         }
 
     }

@@ -41,8 +41,8 @@
 
 
 <script lang="ts">
-    import {Component, Vue} from 'vue-property-decorator';
-    import StarRating from '@/components/help/StartRating';
+    import {Component, Prop, Vue} from 'vue-property-decorator';
+    import StarRating from '@/components/help/StartRating.vue';
     import workSerivce from '@/services/WorkService';
     import Work from "../../models/Work";
 
@@ -54,10 +54,10 @@
         computed: {
             work(): Work | undefined {
                 if (this.$route.params['id'] === 'new') {
-                    console.log("adding new work")
+                    console.log("adding new work");
                     return new Work("")
                 } else {
-                    console.log("getting work", this.$route.params['id'])
+                    console.log("getting work", this.$route.params['id']);
                     let x = workSerivce.getById(this.$route.params['id']);
                     if (x) {
                         return document.clone(x)
@@ -70,25 +70,18 @@
         }
     })
     export default class WorkView extends Vue {
-        private _work: Work;
 
-        get work(): Work {
-            return this._work;
-        }
-
-        set work(value: Work) {
-            this._work = value;
-        }
+        @Prop() work: Work;
 
         updateDifficulty(e: any){
-            console.log("change", e)
-            this._work.difficulty= e;
+            console.log("change", e);
+            this.work.difficulty= e;
         }
 
         save() {
-            console.log("saving", this._work);
-            this.$store.commit('saveWork', this._work)
-            this.$router.push('/work/' + this._work.id)
+            console.log("saving", this.work);
+            this.$store.commit('saveWork', this.work);
+            this.$router.push('/work/' + this.work.id)
         }
     }
 </script>
