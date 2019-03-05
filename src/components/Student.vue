@@ -89,6 +89,7 @@
 
         save(){
             this.$store.commit('saveStudent', this.student);
+            this.$router.push("/")
         }
 
 

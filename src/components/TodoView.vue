@@ -1,6 +1,6 @@
 <template>
     <div class="form-check">
-        <input class="form-check-input" type="checkbox" :checked="todo.isDone" @input="updateTodoDone"
+        <input class="form-check-input" type="checkbox" :checked="todo.isDone" @change="updateTodoDone"
                :disabled="todo.isDone"/>
         <input class="form-control" type="text" :value="todo.task" @input="updateTodoTask" :disabled="todo.isDone"/>
         <div class="piece">
@@ -61,6 +61,7 @@
         }
 
         updateTodoTask(e) {
+            console.log("updateTodoTask",(e))
             this.$store.commit('updateTodoTask', {
                 student: this.student,
                 todo: this.todo,
@@ -70,6 +71,7 @@
         }
 
         updateTodoDone(e) {
+            console.log("updateTodoDone",(e))
             this.$store.commit('updateTodoDone', {
                 student: this.student,
                 todo: this.todo,
