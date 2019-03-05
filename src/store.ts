@@ -6,7 +6,7 @@ import VuexPersistence from 'vuex-persist'
 import todoService from "@/services/TodoService";
 import Todo from "@/models/Todo";
 import Work from "@/models/Work";
-import worksInitial from "./models/worksInitial";
+import worksInitial from "@/models/worksinitial";
 
 Vue.use(Vuex);
 Vue.use(BootstrapVue);
