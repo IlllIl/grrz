@@ -17,6 +17,7 @@
             </div>
         </nav>
 
+        <button @click="bla">FIKE</button>
         <div class="container">
             <router-view/>
         </div>
@@ -26,8 +27,21 @@
     </div>
 </template>
 <script>
+    export default {
+        methods: {
+            bla() {
+                var createCalOptions = window.plugins.calendar.getCreateCalendarOptions();
+                createCalOptions.calendarName = "My Cal Name";
+                createCalOptions.calendarColor = "#FF0000"; // an optional hex color (with the # char), default is null, so the OS picks a color
 
-    export default {}
+                window.plugins.calendar.createCalendar("calendarName", success => console.log("success", success), error => console.log("error", error));
+
+                window.plugins.calendar.listCalendars(success => console.log("success", success), error => console.log("error", error));
+
+            }
+
+        }
+    }
 </script>
 <style lang="scss">
     footer .container {
@@ -60,8 +74,8 @@
                 background-color: #fff1e0;
             }
         }
-        .modal-content{
-            background-color: linen ;
+        .modal-content {
+            background-color: linen;
         }
 
     }

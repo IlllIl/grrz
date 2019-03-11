@@ -12,7 +12,8 @@ class WorkService {
         return this.work;
     }
 
-    getById(id: String): Work | undefined{
+    getById(id: String): Work {
+        // @ts-ignore
         return this.work.find(value => value.id === id);
     }
 

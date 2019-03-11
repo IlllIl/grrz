@@ -7,7 +7,8 @@
     <author email="dev@cordova.apache.org" href="http://cordova.io">
         Apache Cordova Team
     </author>
-    <content src="index.html" />
+    <content src="http://172.29.139.113:8080" />
+    <allow-navigation href="http://172.29.139.113:8080" />
     <allow-navigation href="http://10.0.75.1:8080" />
     <plugin name="cordova-plugin-whitelist" spec="1" />
     <access origin="*" />
@@ -24,11 +25,17 @@
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
     </platform>
-    <plugin name="cordova-plugin-file" spec="^6.0.1" />
     <plugin name="cordova-plugin-x-socialsharing" spec="^5.4.4">
         <variable name="ANDROID_SUPPORT_V4_VERSION" value="24.1.1+" />
     </plugin>
     <plugin name="cordova-plugin-dialogs" spec="^2.0.1" />
+    <plugin name="cordova-plugin-file" spec="^6.0.1" />
+    <plugin name="cordova-plugin-file-opener2" spec="^2.2.0">
+        <variable name="ANDROID_SUPPORT_V4_VERSION" value="27.+" />
+    </plugin>
+    <plugin name="cordova-plugin-filepath" spec="^1.5.1" />
+    <plugin name="cordova-plugin-chooser" spec="^1.2.5" />
+    <plugin name="cordova-plugin-calendar" spec="^5.1.4" />
     <engine name="android" spec="^7.1.4" />
     <engine name="browser" spec="^5.0.4" />
 </widget>

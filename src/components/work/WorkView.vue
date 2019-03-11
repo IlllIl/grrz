@@ -16,13 +16,25 @@
             </div>
 
             <div class="location">
-                <label for="work-edit-location-form">URL</label>
+                <label for="work-edit-location-form">Link</label>
                 <input id="work-edit-location-form" class="form-control" type="text" v-model="work.location"/>
             </div>
+<!--
+            <div class="file">
+                <label for="work-edit-file-form">File</label>
+                <span v-if="work.file">{{work.file.name}}</span>
+                <button id="work-edit-file-form" @click="chooseFile">Choose file</button>
+            </div>
+-->
 
             <div class="difficulty">
                 <label>Difficulty</label>
-                <StarRating  v-bind:value="work.difficulty" v-on:difficulty-star-change="updateDifficulty"></StarRating>
+                <StarRating v-bind:value="work.difficulty" v-on:difficulty-star-change="updateDifficulty"></StarRating>
+            </div>
+
+            <div class="difficulty">
+                <label>File</label>
+                <input @change="log" type="file"/>
             </div>
 
             <select class="form-control" v-model="work.genre">
@@ -47,41 +59,49 @@
     import Work from "../../models/Work";
 
     declare var document: any;
+    declare var chooser: any;
 
     @Component({
         name: "WorkView",
         components: {StarRating},
-        computed: {
-            work(): Work | undefined {
-                if (this.$route.params['id'] === 'new') {
-                    console.log("adding new work");
-                    return new Work("")
-                } else {
-                    console.log("getting work", this.$route.params['id']);
-                    let x = workSerivce.getById(this.$route.params['id']);
-                    if (x) {
-                        return document.clone(x)
+        data() {
+            return {
+                work: (()=> {
+                    console.log("bla craetes");
+                    if (this.$route.params['id'] === 'new') {
+                        console.log("adding new work");
+                        return new Work("")
                     } else {
-                        return new Work("");
+                        console.log("getting work", this.$route.params['id']);
+                        let x = workSerivce.getById(this.$route.params['id']);
+                        if (x) {
+                            return document.clone(x)
+                        } else {
+                            return new Work("");
+                        }
                     }
-
-                }
+                })()
             }
-        }
+        },
     })
     export default class WorkView extends Vue {
 
-        @Prop() work: Work;
+        work: Work;
 
-        updateDifficulty(e: any){
+        log (e){
+            console.log("ev",e)
+            this.work.file= e.target.value
+        }
+
+        updateDifficulty(e: any) {
             console.log("change", e);
-            this.work.difficulty= e;
+            this.work.difficulty = e;
         }
 
         save() {
             console.log("saving", this.work);
             this.$store.commit('saveWork', this.work);
-            this.$router.push('/work/' + this.work.id)
+            this.$router.push('/works')
         }
     }
 </script>

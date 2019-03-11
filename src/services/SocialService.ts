@@ -1,15 +1,25 @@
 import Todo from "@/models/Todo";
 import workSerivce from '@/services/WorkService';
+import Work from "@/models/Work";
 
 declare var window: any;
 
 class SocialService {
 
     share(todos: Todo[]) {
+        let files = todos.filter(todo=>todo.piece).map(todo=>
+            todo.piece
+        ).map(todo=>{
+            return JSON.parse(JSON.stringify(workSerivce.getById(todo)));
+        }).filter(function (piece: Work, i, a): boolean {
+            return (piece && piece.file);
+        }).map(piece=>piece.file
+        )
+        console.log("files", files);
         var options = {
             message: this.generateMessages(todos), // not supported on some apps (Facebook, Instagram)
             subject: 'Deine Aufgaben :)', // fi. for email
-            files: ['', ''], // an array of filenames either locally or remotely
+            files: files, // an array of filenames either locally or remotely
             chooserTitle: 'Pick an app', // Android only, you can override the default share sheet title,
         };
 

@@ -9,7 +9,7 @@ export default class Work {
     tags!: string[];
     difficulty!: number;
     genre!: string;
-
+    file!: any;
 
     constructor(name: string) {
         this.id = uuid();
