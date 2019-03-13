@@ -10,7 +10,6 @@
     <content src="http://10.0.75.1:8080" />
     <allow-navigation href="http://10.0.75.1:8080" />
     <allow-navigation href="http://172.29.139.113:8080" />
-    <allow-navigation href="http://10.0.75.1:8080" />
     <plugin name="cordova-plugin-whitelist" spec="1" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
@@ -37,6 +36,9 @@
     <plugin name="cordova-plugin-filepath" spec="^1.5.1" />
     <plugin name="cordova-plugin-chooser" spec="^1.2.5" />
     <plugin name="cordova-plugin-calendar" spec="^5.1.4" />
+    <plugin name="cordova-plugin-cloud-settings" spec="^1.0.4">
+        <variable name="ANDROID_BACKUP_SERVICE_KEY" value="grrz" />
+    </plugin>
     <engine name="android" spec="^7.1.4" />
     <engine name="browser" spec="^5.0.4" />
 </widget>

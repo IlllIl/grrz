@@ -15,6 +15,7 @@
         "cordova-ourcodeworld-filebrowser": "git+https://github.com/ourcodeworld/cordova-ourcodeworld-filebrowser.git",
         "cordova-plugin-calendar": "^5.1.4",
         "cordova-plugin-chooser": "^1.2.5",
+        "cordova-plugin-cloud-settings": "^1.0.4",
         "cordova-plugin-dialogs": "^2.0.1",
         "cordova-plugin-file": "^6.0.1",
         "cordova-plugin-file-opener2": "^2.2.0",
@@ -36,7 +37,10 @@
             },
             "cordova-plugin-filepath": {},
             "cordova-plugin-chooser": {},
-            "cordova-plugin-calendar": {}
+            "cordova-plugin-calendar": {},
+            "cordova-plugin-cloud-settings": {
+                "ANDROID_BACKUP_SERVICE_KEY": "grrz"
+            }
         },
         "platforms": [
             "android",

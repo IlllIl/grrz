@@ -88,6 +88,17 @@ let store = new Vuex.Store({
                 i++;
             }
         },
+        load(state, newState){
+            if(newState.timestamp>state.timestamp){
+                console.log('loading')
+                for(let val in newState){
+                    state.val= newState[val];
+                }
+            }
+        },
+        save(state){
+          state.timestamp = new Date().getUTCDate();
+        },
         saveStudent(state, student) {
             console.log('saving student', student);
             let existing: Student = state.students.find((val: Student) => val.id == student.id);
@@ -187,7 +198,6 @@ let store = new Vuex.Store({
                 find.end = event.end;
                 find.dow = event.dow;
             }
-
         }
 
 
