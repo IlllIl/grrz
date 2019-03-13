@@ -20,17 +20,38 @@
                                                                          v-model="student.grade"/>
             </div>
 
+
+            <div class="event">
+                <div>
+                    <span>begin</span><input v-model="event.start" title="begin" type="time"/>
+                </div>
+
+                <div>
+                    <span>end</span><input v-model="event.end" title="end" type="time"/>
+                </div>
+
+                <div>
+                    <select v-model="event.dow">
+                        <option selected>Select Weekday</option>
+                        <option value="0">Monday</option>
+                        <option value="1">Tuesday</option>
+                        <option value="2">Wednesday</option>
+                        <option value="3">Thursday</option>
+                        <option value="4">Friday</option>
+                        <option value="5">Saturday</option>
+                        <option value="6">Sunday</option>
+                    </select>
+                </div>
+            </div>
+
+
+
             <div class="student-edit-save">
                 <button type="button" class="btn btn-info" v-on:click="save()">Save</button>
             </div>
-        </div>
-<!--
 
-        <div class="student-todos">
-        <h2>Todos</h2>
-        <TodoList v-bind:student="student" ></TodoList>
+
         </div>
--->
     </div>
 </template>
 
@@ -44,10 +65,29 @@
     @Component({
         name: "StudentView",
         components: {TodoList},
+        data(){
+            let param = this.$route.params['id'];
+            let student;
+            if (!param || param ==='new') {
+                student = new Student("", new Date(), 1);
+            } else {
+                student =this.$store.getters.getStudentById(this.$route.params['id']);
+            }
+            console.log("edit student", student);
+
+            let event = this.$store.getters.getEventForStudent(student.id);
+            console.log("found event", event);
+            return{
+                event: event,
+                student: student
+            }
+        }
     })
 
 
     export default class StudentView extends Vue {
+        event:any;
+        student:Student;
 
         get util (){
             return util;
@@ -78,17 +118,17 @@
             }
         }
 
-        get student(): Student | undefined {
-            let param = this.$route.params['id'];
-            if (!param || param ==='new') {
-                return new Student("", new Date(), 1);
-            } else {
-                return this.$store.getters.getStudentById(this.$route.params['id']);
-            }
-        }
-
         save(){
+
             this.$store.commit('saveStudent', this.student);
+            if(this.event.start && this.event.end && this.event.dow){
+                console.log('saving event' ,this.event);
+                this.$store.commit('setEventForStudent',  {
+                    event:this.event,
+                    student:this.student
+                });
+            }
+
             this.$router.push("/")
         }
 

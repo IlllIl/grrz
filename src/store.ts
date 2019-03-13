@@ -20,6 +20,7 @@ const vuexLocal = new VuexPersistence({
 function clone(val: any): any {
     return JSON.parse(JSON.stringify(val));
 }
+
 console.log(worksInitial)
 document.clone = clone;
 const initialState = {
@@ -54,6 +55,18 @@ let store = new Vuex.Store({
                 return state.students.find((value: Student) => value.id === id);
             }
         },
+        getEventForStudent(state: any) {
+            if (!state.events) {
+                state.events = []
+            }
+            return (id: string) => {
+                console.log("searching for event for student", id);
+                return state.events.find((value: any) => value.student === id) || {};
+            }
+        },
+        getEvents(state:any){
+            return state.events || [];
+        }
     },
     mutations: {
 
@@ -149,7 +162,34 @@ let store = new Vuex.Store({
             } else {
                 state.works.push(work);
             }
+        },
+        setEventForStudent(state: any, val) {
+            let student= val.student;
+            let event = val.event;
+            console.log("setting event for student", event);
+            if(!state.events){
+                state.events=[];
+            }
+            let find = state.events.find((value: any) => value.student === student.id);
+            if (!find) {
+                //create new
+                let newEvent = {
+                    title: student.name,
+                    student: student.id,
+                    start: event.start,
+                    end: event.end,
+                    dow: [event.dow],
+                    allDay: false
+                };
+                state.events.push(newEvent);
+            } else {
+                find.start = event.start;
+                find.end = event.end;
+                find.dow = event.dow;
+            }
+
         }
+
 
     },
     actions: {}
@@ -161,5 +201,10 @@ document.reset = () => {
     store.commit('reset');
     store.commit('init');
 };
+document.state = () => {
+    console.log('state');
+    return store.state;
+};
+
 
 export default store;

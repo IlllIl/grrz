@@ -12,6 +12,8 @@ import {faMusic} from '@fortawesome/free-solid-svg-icons'
 import {faPlus} from '@fortawesome/free-solid-svg-icons'
 import {faTrashAlt} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
+import FullCalendar from "vue-full-calendar";
+import "fullcalendar/dist/fullcalendar.css";
 
 library.add(faEdit);
 library.add(faMusic);
@@ -21,6 +23,7 @@ Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 
 Vue.config.productionTip = false;
+Vue.use(FullCalendar);
 
 new Vue({
     router,
